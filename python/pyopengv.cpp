@@ -1,14 +1,19 @@
 #include <iostream>
 #include <vector>
+
 #include <opengv/absolute_pose/AbsoluteAdapterBase.hpp>
 #include <opengv/absolute_pose/methods.hpp>
+
 #include <opengv/relative_pose/RelativeAdapterBase.hpp>
 #include <opengv/relative_pose/methods.hpp>
+
 #include <opengv/sac/Ransac.hpp>
 #include <opengv/sac/Lmeds.hpp>
+
 #include <opengv/sac_problems/absolute_pose/AbsolutePoseSacProblem.hpp>
 #include <opengv/sac_problems/relative_pose/CentralRelativePoseSacProblem.hpp>
 #include <opengv/sac_problems/relative_pose/RotationOnlySacProblem.hpp>
+
 #include <opengv/triangulation/methods.hpp>
 
 #include "types.hpp"

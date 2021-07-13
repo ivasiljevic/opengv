@@ -11,6 +11,7 @@
 #include <opengv/sac/Lmeds.hpp>
 
 #include <opengv/sac_problems/absolute_pose/AbsolutePoseSacProblem.hpp>
+//#include <opengv/sac_problems/absolute_pose/AbsolutePoseSacProblem.hpp>
 #include <opengv/sac_problems/relative_pose/CentralRelativePoseSacProblem.hpp>
 #include <opengv/sac_problems/relative_pose/RotationOnlySacProblem.hpp>
 
@@ -337,6 +338,13 @@ py::object gp3p( pyarray_d &v, pyarray_d &p )
     opengv::absolute_pose::gp3p(adapter, 0, 1, 2));
 }
 
+py::object gp3p2( pyarray_d &f, pyarray_d &v, pyarray_d &p )
+{
+  NonCentralAbsoluteAdapter adapter(f, v, p);
+  return listFromTransformations(
+    opengv::absolute_pose::gp3p(adapter, 0, 1, 2));
+}
+
 py::object epnp( pyarray_d &v, pyarray_d &p )
 {
   CentralAbsoluteAdapter adapter(v, p);
@@ -392,6 +400,41 @@ py::object ransac(
   else if (algo_name == "KNEIP") algorithm = AbsolutePoseSacProblem::KNEIP;
   else if (algo_name == "GAO") algorithm = AbsolutePoseSacProblem::GAO;
   else if (algo_name == "EPNP") algorithm = AbsolutePoseSacProblem::EPNP;
+  else if (algo_name == "GP3P") algorithm = AbsolutePoseSacProblem::GP3P;
+
+  std::shared_ptr<AbsolutePoseSacProblem>
+      absposeproblem_ptr(
+        new AbsolutePoseSacProblem(adapter, algorithm));
+
+  // Create a ransac solver for the problem
+  opengv::sac::Ransac<AbsolutePoseSacProblem> ransac;
+
+  ransac.sac_model_ = absposeproblem_ptr;
+  ransac.threshold_ = threshold;
+  ransac.max_iterations_ = max_iterations;
+  ransac.probability_ = probability;
+
+  // Solve
+  ransac.computeModel();
+  return arrayFromTransformation(ransac.model_coefficients_);
+}
+
+py::object ransac2(
+    pyarray_d &f,
+    pyarray_d &v,
+    pyarray_d &p,
+    std::string algo_name,
+    double threshold,
+    int max_iterations,
+    double probability )
+{
+  using namespace opengv::sac_problems::absolute_pose;
+
+  NonCentralAbsoluteAdapter adapter(f, v, p);
+
+  // Create a ransac problem
+  AbsolutePoseSacProblem::algorithm_t algorithm = AbsolutePoseSacProblem::KNEIP;
+  if (algo_name == "EPNP") algorithm = AbsolutePoseSacProblem::EPNP;
   else if (algo_name == "GP3P") algorithm = AbsolutePoseSacProblem::GP3P;
 
   std::shared_ptr<AbsolutePoseSacProblem>
@@ -793,6 +836,7 @@ PYBIND11_MODULE(pyopengv, m) {
   m.def("absolute_pose_p3p_kneip", pyopengv::absolute_pose::p3p_kneip);
   m.def("absolute_pose_p3p_gao", pyopengv::absolute_pose::p3p_gao);
   m.def("absolute_pose_gp3p", pyopengv::absolute_pose::gp3p);
+  m.def("absolute_pose_gp3p2", pyopengv::absolute_pose::gp3p2);
   m.def("absolute_pose_epnp", pyopengv::absolute_pose::epnp);
   m.def("absolute_pose_gpnp", pyopengv::absolute_pose::gpnp);
   m.def("absolute_pose_gpnp2", pyopengv::absolute_pose::gpnp2);
@@ -806,6 +850,17 @@ PYBIND11_MODULE(pyopengv, m) {
         py::arg("iterations") = 1000,
         py::arg("probability") = 0.99
   );
+
+    m.def("absolute_pose_ransac2", pyopengv::absolute_pose::ransac2,
+        py::arg("f"),
+        py::arg("v"),
+        py::arg("p"),
+        py::arg("algo_name"),
+        py::arg("threshold"),
+        py::arg("iterations") = 1000,
+        py::arg("probability") = 0.99
+  );
+
   m.def("absolute_pose_lmeds", pyopengv::absolute_pose::lmeds,
         py::arg("v"),
         py::arg("p"),

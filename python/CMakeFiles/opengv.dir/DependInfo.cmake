@@ -1,0 +1,95 @@
+# The set of languages for which implicit dependencies are needed:
+set(CMAKE_DEPENDS_LANGUAGES
+  "CXX"
+  )
+# The set of files for implicit dependencies of each language:
+set(CMAKE_DEPENDS_CHECK_CXX
+  "/Users/igorvasiljevic/opengv_devel/opengv/src/absolute_pose/CentralAbsoluteAdapter.cpp" "/Users/igorvasiljevic/opengv_devel/opengv/python/CMakeFiles/opengv.dir/src/absolute_pose/CentralAbsoluteAdapter.cpp.o"
+  "/Users/igorvasiljevic/opengv_devel/opengv/src/absolute_pose/MACentralAbsolute.cpp" "/Users/igorvasiljevic/opengv_devel/opengv/python/CMakeFiles/opengv.dir/src/absolute_pose/MACentralAbsolute.cpp.o"
+  "/Users/igorvasiljevic/opengv_devel/opengv/src/absolute_pose/MANoncentralAbsolute.cpp" "/Users/igorvasiljevic/opengv_devel/opengv/python/CMakeFiles/opengv.dir/src/absolute_pose/MANoncentralAbsolute.cpp.o"
+  "/Users/igorvasiljevic/opengv_devel/opengv/src/absolute_pose/NoncentralAbsoluteAdapter.cpp" "/Users/igorvasiljevic/opengv_devel/opengv/python/CMakeFiles/opengv.dir/src/absolute_pose/NoncentralAbsoluteAdapter.cpp.o"
+  "/Users/igorvasiljevic/opengv_devel/opengv/src/absolute_pose/NoncentralAbsoluteMultiAdapter.cpp" "/Users/igorvasiljevic/opengv_devel/opengv/python/CMakeFiles/opengv.dir/src/absolute_pose/NoncentralAbsoluteMultiAdapter.cpp.o"
+  "/Users/igorvasiljevic/opengv_devel/opengv/src/absolute_pose/methods.cpp" "/Users/igorvasiljevic/opengv_devel/opengv/python/CMakeFiles/opengv.dir/src/absolute_pose/methods.cpp.o"
+  "/Users/igorvasiljevic/opengv_devel/opengv/src/absolute_pose/modules/Epnp.cpp" "/Users/igorvasiljevic/opengv_devel/opengv/python/CMakeFiles/opengv.dir/src/absolute_pose/modules/Epnp.cpp.o"
+  "/Users/igorvasiljevic/opengv_devel/opengv/src/absolute_pose/modules/gp3p/code.cpp" "/Users/igorvasiljevic/opengv_devel/opengv/python/CMakeFiles/opengv.dir/src/absolute_pose/modules/gp3p/code.cpp.o"
+  "/Users/igorvasiljevic/opengv_devel/opengv/src/absolute_pose/modules/gp3p/init.cpp" "/Users/igorvasiljevic/opengv_devel/opengv/python/CMakeFiles/opengv.dir/src/absolute_pose/modules/gp3p/init.cpp.o"
+  "/Users/igorvasiljevic/opengv_devel/opengv/src/absolute_pose/modules/gp3p/reductors.cpp" "/Users/igorvasiljevic/opengv_devel/opengv/python/CMakeFiles/opengv.dir/src/absolute_pose/modules/gp3p/reductors.cpp.o"
+  "/Users/igorvasiljevic/opengv_devel/opengv/src/absolute_pose/modules/gp3p/spolynomials.cpp" "/Users/igorvasiljevic/opengv_devel/opengv/python/CMakeFiles/opengv.dir/src/absolute_pose/modules/gp3p/spolynomials.cpp.o"
+  "/Users/igorvasiljevic/opengv_devel/opengv/src/absolute_pose/modules/gpnp1/code.cpp" "/Users/igorvasiljevic/opengv_devel/opengv/python/CMakeFiles/opengv.dir/src/absolute_pose/modules/gpnp1/code.cpp.o"
+  "/Users/igorvasiljevic/opengv_devel/opengv/src/absolute_pose/modules/gpnp1/init.cpp" "/Users/igorvasiljevic/opengv_devel/opengv/python/CMakeFiles/opengv.dir/src/absolute_pose/modules/gpnp1/init.cpp.o"
+  "/Users/igorvasiljevic/opengv_devel/opengv/src/absolute_pose/modules/gpnp1/reductors.cpp" "/Users/igorvasiljevic/opengv_devel/opengv/python/CMakeFiles/opengv.dir/src/absolute_pose/modules/gpnp1/reductors.cpp.o"
+  "/Users/igorvasiljevic/opengv_devel/opengv/src/absolute_pose/modules/gpnp1/spolynomials.cpp" "/Users/igorvasiljevic/opengv_devel/opengv/python/CMakeFiles/opengv.dir/src/absolute_pose/modules/gpnp1/spolynomials.cpp.o"
+  "/Users/igorvasiljevic/opengv_devel/opengv/src/absolute_pose/modules/gpnp2/code.cpp" "/Users/igorvasiljevic/opengv_devel/opengv/python/CMakeFiles/opengv.dir/src/absolute_pose/modules/gpnp2/code.cpp.o"
+  "/Users/igorvasiljevic/opengv_devel/opengv/src/absolute_pose/modules/gpnp2/init.cpp" "/Users/igorvasiljevic/opengv_devel/opengv/python/CMakeFiles/opengv.dir/src/absolute_pose/modules/gpnp2/init.cpp.o"
+  "/Users/igorvasiljevic/opengv_devel/opengv/src/absolute_pose/modules/gpnp2/reductors.cpp" "/Users/igorvasiljevic/opengv_devel/opengv/python/CMakeFiles/opengv.dir/src/absolute_pose/modules/gpnp2/reductors.cpp.o"
+  "/Users/igorvasiljevic/opengv_devel/opengv/src/absolute_pose/modules/gpnp2/spolynomials.cpp" "/Users/igorvasiljevic/opengv_devel/opengv/python/CMakeFiles/opengv.dir/src/absolute_pose/modules/gpnp2/spolynomials.cpp.o"
+  "/Users/igorvasiljevic/opengv_devel/opengv/src/absolute_pose/modules/gpnp3/code.cpp" "/Users/igorvasiljevic/opengv_devel/opengv/python/CMakeFiles/opengv.dir/src/absolute_pose/modules/gpnp3/code.cpp.o"
+  "/Users/igorvasiljevic/opengv_devel/opengv/src/absolute_pose/modules/gpnp3/init.cpp" "/Users/igorvasiljevic/opengv_devel/opengv/python/CMakeFiles/opengv.dir/src/absolute_pose/modules/gpnp3/init.cpp.o"
+  "/Users/igorvasiljevic/opengv_devel/opengv/src/absolute_pose/modules/gpnp3/reductors.cpp" "/Users/igorvasiljevic/opengv_devel/opengv/python/CMakeFiles/opengv.dir/src/absolute_pose/modules/gpnp3/reductors.cpp.o"
+  "/Users/igorvasiljevic/opengv_devel/opengv/src/absolute_pose/modules/gpnp3/spolynomials.cpp" "/Users/igorvasiljevic/opengv_devel/opengv/python/CMakeFiles/opengv.dir/src/absolute_pose/modules/gpnp3/spolynomials.cpp.o"
+  "/Users/igorvasiljevic/opengv_devel/opengv/src/absolute_pose/modules/gpnp4/code.cpp" "/Users/igorvasiljevic/opengv_devel/opengv/python/CMakeFiles/opengv.dir/src/absolute_pose/modules/gpnp4/code.cpp.o"
+  "/Users/igorvasiljevic/opengv_devel/opengv/src/absolute_pose/modules/gpnp4/init.cpp" "/Users/igorvasiljevic/opengv_devel/opengv/python/CMakeFiles/opengv.dir/src/absolute_pose/modules/gpnp4/init.cpp.o"
+  "/Users/igorvasiljevic/opengv_devel/opengv/src/absolute_pose/modules/gpnp4/reductors.cpp" "/Users/igorvasiljevic/opengv_devel/opengv/python/CMakeFiles/opengv.dir/src/absolute_pose/modules/gpnp4/reductors.cpp.o"
+  "/Users/igorvasiljevic/opengv_devel/opengv/src/absolute_pose/modules/gpnp4/spolynomials.cpp" "/Users/igorvasiljevic/opengv_devel/opengv/python/CMakeFiles/opengv.dir/src/absolute_pose/modules/gpnp4/spolynomials.cpp.o"
+  "/Users/igorvasiljevic/opengv_devel/opengv/src/absolute_pose/modules/gpnp5/code.cpp" "/Users/igorvasiljevic/opengv_devel/opengv/python/CMakeFiles/opengv.dir/src/absolute_pose/modules/gpnp5/code.cpp.o"
+  "/Users/igorvasiljevic/opengv_devel/opengv/src/absolute_pose/modules/gpnp5/init.cpp" "/Users/igorvasiljevic/opengv_devel/opengv/python/CMakeFiles/opengv.dir/src/absolute_pose/modules/gpnp5/init.cpp.o"
+  "/Users/igorvasiljevic/opengv_devel/opengv/src/absolute_pose/modules/gpnp5/reductors.cpp" "/Users/igorvasiljevic/opengv_devel/opengv/python/CMakeFiles/opengv.dir/src/absolute_pose/modules/gpnp5/reductors.cpp.o"
+  "/Users/igorvasiljevic/opengv_devel/opengv/src/absolute_pose/modules/gpnp5/spolynomials.cpp" "/Users/igorvasiljevic/opengv_devel/opengv/python/CMakeFiles/opengv.dir/src/absolute_pose/modules/gpnp5/spolynomials.cpp.o"
+  "/Users/igorvasiljevic/opengv_devel/opengv/src/absolute_pose/modules/main.cpp" "/Users/igorvasiljevic/opengv_devel/opengv/python/CMakeFiles/opengv.dir/src/absolute_pose/modules/main.cpp.o"
+  "/Users/igorvasiljevic/opengv_devel/opengv/src/absolute_pose/modules/upnp2.cpp" "/Users/igorvasiljevic/opengv_devel/opengv/python/CMakeFiles/opengv.dir/src/absolute_pose/modules/upnp2.cpp.o"
+  "/Users/igorvasiljevic/opengv_devel/opengv/src/absolute_pose/modules/upnp4.cpp" "/Users/igorvasiljevic/opengv_devel/opengv/python/CMakeFiles/opengv.dir/src/absolute_pose/modules/upnp4.cpp.o"
+  "/Users/igorvasiljevic/opengv_devel/opengv/src/math/Sturm.cpp" "/Users/igorvasiljevic/opengv_devel/opengv/python/CMakeFiles/opengv.dir/src/math/Sturm.cpp.o"
+  "/Users/igorvasiljevic/opengv_devel/opengv/src/math/arun.cpp" "/Users/igorvasiljevic/opengv_devel/opengv/python/CMakeFiles/opengv.dir/src/math/arun.cpp.o"
+  "/Users/igorvasiljevic/opengv_devel/opengv/src/math/cayley.cpp" "/Users/igorvasiljevic/opengv_devel/opengv/python/CMakeFiles/opengv.dir/src/math/cayley.cpp.o"
+  "/Users/igorvasiljevic/opengv_devel/opengv/src/math/gauss_jordan.cpp" "/Users/igorvasiljevic/opengv_devel/opengv/python/CMakeFiles/opengv.dir/src/math/gauss_jordan.cpp.o"
+  "/Users/igorvasiljevic/opengv_devel/opengv/src/math/quaternion.cpp" "/Users/igorvasiljevic/opengv_devel/opengv/python/CMakeFiles/opengv.dir/src/math/quaternion.cpp.o"
+  "/Users/igorvasiljevic/opengv_devel/opengv/src/math/roots.cpp" "/Users/igorvasiljevic/opengv_devel/opengv/python/CMakeFiles/opengv.dir/src/math/roots.cpp.o"
+  "/Users/igorvasiljevic/opengv_devel/opengv/src/point_cloud/MAPointCloud.cpp" "/Users/igorvasiljevic/opengv_devel/opengv/python/CMakeFiles/opengv.dir/src/point_cloud/MAPointCloud.cpp.o"
+  "/Users/igorvasiljevic/opengv_devel/opengv/src/point_cloud/PointCloudAdapter.cpp" "/Users/igorvasiljevic/opengv_devel/opengv/python/CMakeFiles/opengv.dir/src/point_cloud/PointCloudAdapter.cpp.o"
+  "/Users/igorvasiljevic/opengv_devel/opengv/src/point_cloud/methods.cpp" "/Users/igorvasiljevic/opengv_devel/opengv/python/CMakeFiles/opengv.dir/src/point_cloud/methods.cpp.o"
+  "/Users/igorvasiljevic/opengv_devel/opengv/src/relative_pose/CentralRelativeAdapter.cpp" "/Users/igorvasiljevic/opengv_devel/opengv/python/CMakeFiles/opengv.dir/src/relative_pose/CentralRelativeAdapter.cpp.o"
+  "/Users/igorvasiljevic/opengv_devel/opengv/src/relative_pose/CentralRelativeMultiAdapter.cpp" "/Users/igorvasiljevic/opengv_devel/opengv/python/CMakeFiles/opengv.dir/src/relative_pose/CentralRelativeMultiAdapter.cpp.o"
+  "/Users/igorvasiljevic/opengv_devel/opengv/src/relative_pose/CentralRelativeWeightingAdapter.cpp" "/Users/igorvasiljevic/opengv_devel/opengv/python/CMakeFiles/opengv.dir/src/relative_pose/CentralRelativeWeightingAdapter.cpp.o"
+  "/Users/igorvasiljevic/opengv_devel/opengv/src/relative_pose/MACentralRelative.cpp" "/Users/igorvasiljevic/opengv_devel/opengv/python/CMakeFiles/opengv.dir/src/relative_pose/MACentralRelative.cpp.o"
+  "/Users/igorvasiljevic/opengv_devel/opengv/src/relative_pose/MANoncentralRelative.cpp" "/Users/igorvasiljevic/opengv_devel/opengv/python/CMakeFiles/opengv.dir/src/relative_pose/MANoncentralRelative.cpp.o"
+  "/Users/igorvasiljevic/opengv_devel/opengv/src/relative_pose/MANoncentralRelativeMulti.cpp" "/Users/igorvasiljevic/opengv_devel/opengv/python/CMakeFiles/opengv.dir/src/relative_pose/MANoncentralRelativeMulti.cpp.o"
+  "/Users/igorvasiljevic/opengv_devel/opengv/src/relative_pose/NoncentralRelativeAdapter.cpp" "/Users/igorvasiljevic/opengv_devel/opengv/python/CMakeFiles/opengv.dir/src/relative_pose/NoncentralRelativeAdapter.cpp.o"
+  "/Users/igorvasiljevic/opengv_devel/opengv/src/relative_pose/NoncentralRelativeMultiAdapter.cpp" "/Users/igorvasiljevic/opengv_devel/opengv/python/CMakeFiles/opengv.dir/src/relative_pose/NoncentralRelativeMultiAdapter.cpp.o"
+  "/Users/igorvasiljevic/opengv_devel/opengv/src/relative_pose/methods.cpp" "/Users/igorvasiljevic/opengv_devel/opengv/python/CMakeFiles/opengv.dir/src/relative_pose/methods.cpp.o"
+  "/Users/igorvasiljevic/opengv_devel/opengv/src/relative_pose/modules/eigensolver/modules.cpp" "/Users/igorvasiljevic/opengv_devel/opengv/python/CMakeFiles/opengv.dir/src/relative_pose/modules/eigensolver/modules.cpp.o"
+  "/Users/igorvasiljevic/opengv_devel/opengv/src/relative_pose/modules/fivept_kneip/code.cpp" "/Users/igorvasiljevic/opengv_devel/opengv/python/CMakeFiles/opengv.dir/src/relative_pose/modules/fivept_kneip/code.cpp.o"
+  "/Users/igorvasiljevic/opengv_devel/opengv/src/relative_pose/modules/fivept_kneip/init.cpp" "/Users/igorvasiljevic/opengv_devel/opengv/python/CMakeFiles/opengv.dir/src/relative_pose/modules/fivept_kneip/init.cpp.o"
+  "/Users/igorvasiljevic/opengv_devel/opengv/src/relative_pose/modules/fivept_kneip/reductors.cpp" "/Users/igorvasiljevic/opengv_devel/opengv/python/CMakeFiles/opengv.dir/src/relative_pose/modules/fivept_kneip/reductors.cpp.o"
+  "/Users/igorvasiljevic/opengv_devel/opengv/src/relative_pose/modules/fivept_kneip/spolynomials.cpp" "/Users/igorvasiljevic/opengv_devel/opengv/python/CMakeFiles/opengv.dir/src/relative_pose/modules/fivept_kneip/spolynomials.cpp.o"
+  "/Users/igorvasiljevic/opengv_devel/opengv/src/relative_pose/modules/fivept_nister/modules.cpp" "/Users/igorvasiljevic/opengv_devel/opengv/python/CMakeFiles/opengv.dir/src/relative_pose/modules/fivept_nister/modules.cpp.o"
+  "/Users/igorvasiljevic/opengv_devel/opengv/src/relative_pose/modules/fivept_stewenius/modules.cpp" "/Users/igorvasiljevic/opengv_devel/opengv/python/CMakeFiles/opengv.dir/src/relative_pose/modules/fivept_stewenius/modules.cpp.o"
+  "/Users/igorvasiljevic/opengv_devel/opengv/src/relative_pose/modules/ge/modules.cpp" "/Users/igorvasiljevic/opengv_devel/opengv/python/CMakeFiles/opengv.dir/src/relative_pose/modules/ge/modules.cpp.o"
+  "/Users/igorvasiljevic/opengv_devel/opengv/src/relative_pose/modules/main.cpp" "/Users/igorvasiljevic/opengv_devel/opengv/python/CMakeFiles/opengv.dir/src/relative_pose/modules/main.cpp.o"
+  "/Users/igorvasiljevic/opengv_devel/opengv/src/relative_pose/modules/sixpt/modules2.cpp" "/Users/igorvasiljevic/opengv_devel/opengv/python/CMakeFiles/opengv.dir/src/relative_pose/modules/sixpt/modules2.cpp.o"
+  "/Users/igorvasiljevic/opengv_devel/opengv/src/sac_problems/absolute_pose/AbsolutePoseSacProblem.cpp" "/Users/igorvasiljevic/opengv_devel/opengv/python/CMakeFiles/opengv.dir/src/sac_problems/absolute_pose/AbsolutePoseSacProblem.cpp.o"
+  "/Users/igorvasiljevic/opengv_devel/opengv/src/sac_problems/absolute_pose/MultiNoncentralAbsolutePoseSacProblem.cpp" "/Users/igorvasiljevic/opengv_devel/opengv/python/CMakeFiles/opengv.dir/src/sac_problems/absolute_pose/MultiNoncentralAbsolutePoseSacProblem.cpp.o"
+  "/Users/igorvasiljevic/opengv_devel/opengv/src/sac_problems/point_cloud/PointCloudSacProblem.cpp" "/Users/igorvasiljevic/opengv_devel/opengv/python/CMakeFiles/opengv.dir/src/sac_problems/point_cloud/PointCloudSacProblem.cpp.o"
+  "/Users/igorvasiljevic/opengv_devel/opengv/src/sac_problems/relative_pose/CentralRelativePoseSacProblem.cpp" "/Users/igorvasiljevic/opengv_devel/opengv/python/CMakeFiles/opengv.dir/src/sac_problems/relative_pose/CentralRelativePoseSacProblem.cpp.o"
+  "/Users/igorvasiljevic/opengv_devel/opengv/src/sac_problems/relative_pose/EigensolverSacProblem.cpp" "/Users/igorvasiljevic/opengv_devel/opengv/python/CMakeFiles/opengv.dir/src/sac_problems/relative_pose/EigensolverSacProblem.cpp.o"
+  "/Users/igorvasiljevic/opengv_devel/opengv/src/sac_problems/relative_pose/MultiCentralRelativePoseSacProblem.cpp" "/Users/igorvasiljevic/opengv_devel/opengv/python/CMakeFiles/opengv.dir/src/sac_problems/relative_pose/MultiCentralRelativePoseSacProblem.cpp.o"
+  "/Users/igorvasiljevic/opengv_devel/opengv/src/sac_problems/relative_pose/MultiNoncentralRelativePoseSacProblem.cpp" "/Users/igorvasiljevic/opengv_devel/opengv/python/CMakeFiles/opengv.dir/src/sac_problems/relative_pose/MultiNoncentralRelativePoseSacProblem.cpp.o"
+  "/Users/igorvasiljevic/opengv_devel/opengv/src/sac_problems/relative_pose/NoncentralRelativePoseSacProblem.cpp" "/Users/igorvasiljevic/opengv_devel/opengv/python/CMakeFiles/opengv.dir/src/sac_problems/relative_pose/NoncentralRelativePoseSacProblem.cpp.o"
+  "/Users/igorvasiljevic/opengv_devel/opengv/src/sac_problems/relative_pose/RotationOnlySacProblem.cpp" "/Users/igorvasiljevic/opengv_devel/opengv/python/CMakeFiles/opengv.dir/src/sac_problems/relative_pose/RotationOnlySacProblem.cpp.o"
+  "/Users/igorvasiljevic/opengv_devel/opengv/src/sac_problems/relative_pose/TranslationOnlySacProblem.cpp" "/Users/igorvasiljevic/opengv_devel/opengv/python/CMakeFiles/opengv.dir/src/sac_problems/relative_pose/TranslationOnlySacProblem.cpp.o"
+  "/Users/igorvasiljevic/opengv_devel/opengv/src/triangulation/methods.cpp" "/Users/igorvasiljevic/opengv_devel/opengv/python/CMakeFiles/opengv.dir/src/triangulation/methods.cpp.o"
+  )
+set(CMAKE_CXX_COMPILER_ID "AppleClang")
+
+# The include file search paths:
+set(CMAKE_CXX_TARGET_INCLUDE_PATH
+  "../include"
+  "/usr/local/include/eigen3"
+  "/usr/local/include/eigen3/unsupported"
+  )
+
+# Targets to which this target links.
+set(CMAKE_TARGET_LINKED_INFO_FILES
+  )
+
+# Fortran module output directory.
+set(CMAKE_Fortran_TARGET_MODULE_DIR "")

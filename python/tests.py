@@ -235,3 +235,13 @@ if __name__ == "__main__":
     test_relative_pose_ransac()
     test_relative_pose_ransac_rotation_only()
     test_triangulation()
+
+    f = np.random.randn(10, 3)
+    v = np.random.randn(10, 3)
+    p = np.random.randn(10, 3)
+
+    print(pyopengv.absolute_pose_gpnp(f, v))
+    print("\n")
+    print(pyopengv.absolute_pose_gpnp2(f, v, p))
+
+

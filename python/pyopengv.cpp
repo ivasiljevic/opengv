@@ -33,6 +33,18 @@ opengv::bearingVector_t bearingVectorFromArray(
   return v;
 }
 
+opengv::bearingVector_t offsetFromArray(
+    const pyarray_d &array,
+    size_t index )
+{
+  opengv::translation_t v;
+  v[0] = *array.data(index, 0);
+  v[1] = *array.data(index, 1);
+  v[2] = *array.data(index, 2);
+  return v;
+}
+
+
 opengv::point_t pointFromArray(
     const pyarray_d &array,
     size_t index )
@@ -116,6 +128,10 @@ std::vector<int> getNindices( int n )
 
 namespace absolute_pose {
 
+
+/* This is the central adapter
+	Need to copy for non-central
+*/
 class CentralAbsoluteAdapter : public opengv::absolute_pose::AbsoluteAdapterBase
 {
 protected:
@@ -197,6 +213,100 @@ protected:
   pyarray_d _points;
 };
 
+/* 
+	Need to copy for non-central
+*/
+
+class NonCentralAbsoluteAdapter : public opengv::absolute_pose::AbsoluteAdapterBase
+{
+protected:
+  using AbsoluteAdapterBase::_t;
+  using AbsoluteAdapterBase::_R;
+
+public:
+  EIGEN_MAKE_ALIGNED_OPERATOR_NEW
+
+  NonCentralAbsoluteAdapter(
+      pyarray_d &bearingVectors,
+      pyarray_d &offsets,
+      pyarray_d &points )
+    : _bearingVectors(bearingVectors)
+    , _offsets(offsets)
+    , _points(points)
+  {}
+
+  NonCentralAbsoluteAdapter(
+      pyarray_d &bearingVectors,
+      pyarray_d &offsets,
+      pyarray_d &points,
+      pyarray_d &R )
+    : _bearingVectors(bearingVectors)
+    , _offsets(offsets)
+    , _points(points)
+  {
+    for (int i = 0; i < 3; ++i) {
+      for (int j = 0; j < 3; ++j) {
+        _R(i, j) = *R.data(i, j);
+      }
+    }
+  }
+
+  NonCentralAbsoluteAdapter(
+      pyarray_d &bearingVectors,
+      pyarray_d &points,
+      pyarray_d &offsets,
+      pyarray_d &t,
+      pyarray_d &R )
+    : _bearingVectors(bearingVectors)
+      , _offsets(offsets)
+    , _points(points)
+  {
+    for (int i = 0; i < 3; ++i) {
+      _t(i) = *t.data(i);
+    }
+    for (int i = 0; i < 3; ++i) {
+      for (int j = 0; j < 3; ++j) {
+        _R(i, j) = *R.data(i, j);
+      }
+    }
+  }
+
+  virtual ~NonCentralAbsoluteAdapter() {}
+
+  //Access of correspondences
+
+  virtual opengv::bearingVector_t getBearingVector( size_t index ) const {
+    return bearingVectorFromArray(_bearingVectors, index);
+  }
+
+  virtual double getWeight( size_t index ) const {
+    return 1.0;
+  }
+
+// this is because central
+  virtual opengv::translation_t getCamOffset( size_t index ) const {
+    //return Eigen::Vector3d::Zero();
+    return offsetFromArray(_offsets, index);
+  }
+
+  virtual opengv::rotation_t getCamRotation( size_t index ) const {
+    return opengv::rotation_t::Identity();
+  }
+
+  virtual opengv::point_t getPoint( size_t index ) const {
+    return pointFromArray(_points, index);
+  }
+
+  virtual size_t getNumberCorrespondences() const {
+    return _bearingVectors.shape(0);
+  }
+
+protected:
+  pyarray_d _bearingVectors;
+  pyarray_d _offsets;
+  pyarray_d _points;
+};
+
 
 
 py::object p2p( pyarray_d &v, pyarray_d &p, pyarray_d &R )
@@ -237,6 +347,12 @@ py::object epnp( pyarray_d &v, pyarray_d &p )
 py::object gpnp( pyarray_d &v, pyarray_d &p )
 {
   CentralAbsoluteAdapter adapter(v, p);
+  return arrayFromTransformation(
+    opengv::absolute_pose::gpnp(adapter));
+}
+py::object gpnp2( pyarray_d &f, pyarray_d &v, pyarray_d &p )
+{
+  NonCentralAbsoluteAdapter adapter(f, v, p);
   return arrayFromTransformation(
     opengv::absolute_pose::gpnp(adapter));
 }
@@ -679,6 +795,7 @@ PYBIND11_MODULE(pyopengv, m) {
   m.def("absolute_pose_gp3p", pyopengv::absolute_pose::gp3p);
   m.def("absolute_pose_epnp", pyopengv::absolute_pose::epnp);
   m.def("absolute_pose_gpnp", pyopengv::absolute_pose::gpnp);
+  m.def("absolute_pose_gpnp2", pyopengv::absolute_pose::gpnp2);
   m.def("absolute_pose_upnp", pyopengv::absolute_pose::upnp);
   m.def("absolute_pose_optimize_nonlinear", pyopengv::absolute_pose::optimize_nonlinear);
   m.def("absolute_pose_ransac", pyopengv::absolute_pose::ransac,

@@ -1,6 +1,9 @@
 
 add_subdirectory(pybind11)
 
+# 3.6 version
+set(PYTHON_EXECUTABLE /Users/igorvasiljevic/miniconda3/envs/pptk36/bin/python3.6)
+
 include_directories(${PYTHON_INCLUDE_DIRS})
 
 

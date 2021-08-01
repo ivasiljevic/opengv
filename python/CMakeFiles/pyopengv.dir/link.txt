@@ -1,0 +1,1 @@
+/Library/Developer/CommandLineTools/usr/bin/c++ -O3 -DNDEBUG -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk -bundle -Wl,-headerpad_max_install_names -o ../lib/pyopengv.cpython-37m-darwin.so CMakeFiles/pyopengv.dir/pyopengv.cpp.o  -undefined dynamic_lookup -flto ../lib/libopengv.a 

@@ -39,18 +39,18 @@ endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   list(APPEND CMAKE_ABSOLUTE_DESTINATION_FILES
-   "/usr/lib/python3/dist-packages/pyopengv.cpython-39-darwin.so")
+   "/Users/igorvasiljevic/miniconda3/envs/pptk36/bin/python3.6/pyopengv.cpython-39-darwin.so")
   if(CMAKE_WARN_ON_ABSOLUTE_INSTALL_DESTINATION)
     message(WARNING "ABSOLUTE path INSTALL DESTINATION : ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
   endif()
   if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
     message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
   endif()
-file(INSTALL DESTINATION "/usr/lib/python3/dist-packages" TYPE MODULE FILES "/Users/igorvasiljevic/opengv_devel/opengv/python/lib/pyopengv.cpython-39-darwin.so")
-  if(EXISTS "$ENV{DESTDIR}/usr/lib/python3/dist-packages/pyopengv.cpython-39-darwin.so" AND
-     NOT IS_SYMLINK "$ENV{DESTDIR}/usr/lib/python3/dist-packages/pyopengv.cpython-39-darwin.so")
+file(INSTALL DESTINATION "/Users/igorvasiljevic/miniconda3/envs/pptk36/bin/python3.6" TYPE MODULE FILES "/Users/igorvasiljevic/opengv_devel/opengv/python/lib/pyopengv.cpython-39-darwin.so")
+  if(EXISTS "$ENV{DESTDIR}/Users/igorvasiljevic/miniconda3/envs/pptk36/bin/python3.6/pyopengv.cpython-39-darwin.so" AND
+     NOT IS_SYMLINK "$ENV{DESTDIR}/Users/igorvasiljevic/miniconda3/envs/pptk36/bin/python3.6/pyopengv.cpython-39-darwin.so")
     if(CMAKE_INSTALL_DO_STRIP)
-      execute_process(COMMAND "/Library/Developer/CommandLineTools/usr/bin/strip" -x "$ENV{DESTDIR}/usr/lib/python3/dist-packages/pyopengv.cpython-39-darwin.so")
+      execute_process(COMMAND "/Library/Developer/CommandLineTools/usr/bin/strip" -x "$ENV{DESTDIR}/Users/igorvasiljevic/miniconda3/envs/pptk36/bin/python3.6/pyopengv.cpython-39-darwin.so")
     endif()
   endif()
 endif()

@@ -281,7 +281,7 @@ PYBIND11_CPP_STANDARD:STRING=-std=c++14
 PYBIND11_INSTALL:BOOL=OFF
 
 //No help, variable specified on the command line.
-PYBIND11_PYTHON_VERSION:UNINITIALIZED=3.9
+PYBIND11_PYTHON_VERSION:UNINITIALIZED=3.6
 
 //Build pybind11 test suite?
 PYBIND11_TEST:BOOL=OFF
@@ -290,7 +290,7 @@ PYBIND11_TEST:BOOL=OFF
 PYTHON_EXECUTABLE:FILEPATH=/Users/igorvasiljevic/miniconda3/envs/py39/bin/python3.9
 
 //Path where to install pyopengv
-PYTHON_INSTALL_DIR:PATH=/usr/lib/python3/dist-packages
+PYTHON_INSTALL_DIR:PATH=/Users/igorvasiljevic/miniconda3/envs/pptk36/bin/python3.6
 
 //Path to a library.
 PYTHON_LIBRARY:FILEPATH=/Users/igorvasiljevic/miniconda3/envs/py39/lib/libpython3.9.dylib
@@ -484,7 +484,7 @@ FIND_PACKAGE_MESSAGE_DETAILS_Eigen:INTERNAL=[/usr/local/include/eigen3][TRUE][v(
 //Details about finding PYTHON
 FIND_PACKAGE_MESSAGE_DETAILS_PYTHON:INTERNAL=/Users/igorvasiljevic/miniconda3/envs/py39/bin/python3.9
 //Details about finding PythonInterp
-FIND_PACKAGE_MESSAGE_DETAILS_PythonInterp:INTERNAL=[/Users/igorvasiljevic/miniconda3/envs/py39/bin/python3.9][v3.9.5(3.9)]
+FIND_PACKAGE_MESSAGE_DETAILS_PythonInterp:INTERNAL=[/Users/igorvasiljevic/miniconda3/envs/py39/bin/python3.9][v3.9.5(3.6)]
 //Test HAS_CPP14_FLAG
 HAS_CPP14_FLAG:INTERNAL=1
 //Test HAS_FLTO

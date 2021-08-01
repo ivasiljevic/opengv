@@ -12,6 +12,8 @@ namespace pyopengv {
 
 namespace py = pybind11;
 
+//std::vector<int>
+
 typedef py::array_t<double, py::array::c_style | py::array::forcecast> pyarray_d;
 
 template <typename T>

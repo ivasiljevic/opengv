@@ -13,6 +13,7 @@
 #include <opengv/sac_problems/absolute_pose/AbsolutePoseSacProblem.hpp>
 //#include <opengv/sac_problems/absolute_pose/AbsolutePoseSacProblem.hpp>
 #include <opengv/sac_problems/relative_pose/CentralRelativePoseSacProblem.hpp>
+#include <opengv/sac_problems/relative_pose/NoncentralRelativePoseSacProblem.hpp>
 #include <opengv/sac_problems/relative_pose/RotationOnlySacProblem.hpp>
 
 #include <opengv/triangulation/methods.hpp>
@@ -102,6 +103,11 @@ py::list listFromEssentials( const opengv::essentials_t &Es )
   }
   return retn;
 }
+
+//py::object arrayFromInliers( const opengv::transformation_t &t )
+//{
+//  return py::array(v->size(), v->data(), capsule);
+//}
 
 py::object arrayFromTransformation( const opengv::transformation_t &t )
 {
@@ -284,7 +290,7 @@ public:
     return 1.0;
   }
 
-// this is because central
+// this is because non-central
   virtual opengv::translation_t getCamOffset( size_t index ) const {
     //return Eigen::Vector3d::Zero();
     return offsetFromArray(_offsets, index);
@@ -344,6 +350,14 @@ py::object gp3p2( pyarray_d &f, pyarray_d &v, pyarray_d &p )
   return listFromTransformations(
     opengv::absolute_pose::gp3p(adapter, 0, 1, 2));
 }
+
+py::object gp3p3( pyarray_d &f, pyarray_d &v, pyarray_d &p, pyarray_d &R, pyarray_d &t )
+{
+  NonCentralAbsoluteAdapter adapter(f, v, p, R, t);
+  return listFromTransformations(
+    opengv::absolute_pose::gp3p(adapter, 0, 1, 2));
+}
+
 
 py::object epnp( pyarray_d &v, pyarray_d &p )
 {
@@ -419,7 +433,8 @@ py::object ransac(
   return arrayFromTransformation(ransac.model_coefficients_);
 }
 
-py::object ransac2(
+py::list ransac_inliers(
+//py::object ransac2(
     pyarray_d &f,
     pyarray_d &v,
     pyarray_d &p,
@@ -451,8 +466,58 @@ py::object ransac2(
 
   // Solve
   ransac.computeModel();
+
+
+  py::list retn;
+  retn.append(arrayFromTransformation(ransac.model_coefficients_));
+  retn.append(py::array(ransac.inliers_.size(), ransac.inliers_.data()));
+  
+  return retn;
+
+  //for (auto i = ransac.inliers_.begin(); i != ransac.inliers_.end(); ++i)
+  //  std::cout << *i << ' ';
+
+  //std::cout << ransac.inliers_;
+  //return py::list(arrayFromTransformation(ransac.model_coefficients_), py::array(ransac.inliers_.size(), ransac.inliers_.data()));
+}
+
+py::object ransac_prior(
+    pyarray_d &f,
+    pyarray_d &v,
+    pyarray_d &p,
+    pyarray_d &R,
+    pyarray_d &t,
+    std::string algo_name,
+    double threshold,
+    int max_iterations,
+    double probability )
+{
+  using namespace opengv::sac_problems::absolute_pose;
+
+  NonCentralAbsoluteAdapter adapter(f, v, p, R, t);
+
+  // Create a ransac problem
+  AbsolutePoseSacProblem::algorithm_t algorithm = AbsolutePoseSacProblem::KNEIP;
+  if (algo_name == "EPNP") algorithm = AbsolutePoseSacProblem::EPNP;
+  else if (algo_name == "GP3P") algorithm = AbsolutePoseSacProblem::GP3P;
+
+  std::shared_ptr<AbsolutePoseSacProblem>
+      absposeproblem_ptr(
+        new AbsolutePoseSacProblem(adapter, algorithm));
+
+  // Create a ransac solver for the problem
+  opengv::sac::Ransac<AbsolutePoseSacProblem> ransac;
+
+  ransac.sac_model_ = absposeproblem_ptr;
+  ransac.threshold_ = threshold;
+  ransac.max_iterations_ = max_iterations;
+  ransac.probability_ = probability;
+
+  // Solve
+  ransac.computeModel();
   return arrayFromTransformation(ransac.model_coefficients_);
 }
+
 
 py::object lmeds(
     pyarray_d &v,
@@ -584,6 +649,120 @@ protected:
   pyarray_d _bearingVectors2;
 };
 
+class NonCentralRelativeAdapter : public opengv::relative_pose::RelativeAdapterBase
+{
+protected:
+  using RelativeAdapterBase::_t12;
+  using RelativeAdapterBase::_R12;
+
+public:
+  EIGEN_MAKE_ALIGNED_OPERATOR_NEW
+
+  NonCentralRelativeAdapter(
+      pyarray_d &bearingVectors1,
+      pyarray_d &bearingVectors2,
+      pyarray_d &offsets1,
+      pyarray_d &offsets2 )
+    : _bearingVectors1(bearingVectors1)
+    , _bearingVectors2(bearingVectors2)
+    , _offsets1(offsets1)
+    , _offsets2(offsets2)
+  {}
+  //NonCentralAbsoluteAdapter(
+  //    pyarray_d &bearingVectors,
+  //    pyarray_d &offsets,
+   //   pyarray_d &points )
+   // : _bearingVectors(bearingVectors)
+   // , _offsets(offsets)
+   // , _points(points)
+  //{}
+
+
+  NonCentralRelativeAdapter(
+      pyarray_d &bearingVectors1,
+      pyarray_d &bearingVectors2,
+      pyarray_d &offsets1,
+      pyarray_d &offsets2,
+      pyarray_d &R12 )
+    : _bearingVectors1(bearingVectors1)
+    , _bearingVectors2(bearingVectors2)
+    , _offsets1(offsets1)
+    , _offsets2(offsets2)
+  {
+    for (int i = 0; i < 3; ++i) {
+      for (int j = 0; j < 3; ++j) {
+        _R12(i, j) = *R12.data(i, j);
+      }
+    }
+  }
+
+  NonCentralRelativeAdapter(
+      pyarray_d &bearingVectors1,
+      pyarray_d &bearingVectors2,
+      pyarray_d &offsets1,
+      pyarray_d &offsets2,
+      pyarray_d &t12,
+      pyarray_d &R12 )
+    : _bearingVectors1(bearingVectors1)
+    , _bearingVectors2(bearingVectors2)
+    , _offsets1(offsets1)
+    , _offsets2(offsets2)
+  {
+    for (int i = 0; i < 3; ++i) {
+      _t12(i) = *t12.data(i);
+    }
+    for (int i = 0; i < 3; ++i) {
+      for (int j = 0; j < 3; ++j) {
+        _R12(i, j) = *R12.data(i, j);
+      }
+    }
+  }
+
+  virtual ~NonCentralRelativeAdapter() {}
+
+  virtual opengv::bearingVector_t getBearingVector1( size_t index ) const {
+    return bearingVectorFromArray(_bearingVectors1, index);
+  }
+
+  virtual opengv::bearingVector_t getBearingVector2( size_t index ) const {
+    return bearingVectorFromArray(_bearingVectors2, index);
+  }
+
+ virtual opengv::translation_t getCamOffset1( size_t index ) const {
+    return offsetFromArray(_offsets1, index);
+  }
+
+ virtual opengv::translation_t getCamOffset2( size_t index ) const {
+    return offsetFromArray(_offsets2, index);
+  }
+
+  virtual double getWeight( size_t index ) const {
+    return 1.0;
+  }
+
+  //virtual opengv::translation_t getCamOffset1( size_t index ) const {
+  // return Eigen::Vector3d::Zero();
+  //}
+
+  virtual opengv::rotation_t getCamRotation1( size_t index ) const {
+    return opengv::rotation_t::Identity();
+  }
+
+  virtual opengv::rotation_t getCamRotation2( size_t index ) const {
+    return opengv::rotation_t::Identity();
+  }
+
+  virtual size_t getNumberCorrespondences() const {
+    return _bearingVectors1.shape(0);
+  }
+
+protected:
+  pyarray_d _bearingVectors1;
+  pyarray_d _bearingVectors2;
+  pyarray_d _offsets1;
+  pyarray_d _offsets2;
+};
+
 
 py::object twopt( pyarray_d &b1, pyarray_d &b2, pyarray_d &R )
 {
@@ -626,6 +805,21 @@ py::object sevenpt( pyarray_d &b1, pyarray_d &b2 )
   return listFromEssentials(
     opengv::relative_pose::sevenpt(adapter));
 }
+
+py::object seventeenpt( pyarray_d &b1, pyarray_d &b2, pyarray_d &v1, pyarray_d &v2)
+{
+  NonCentralRelativeAdapter adapter(b1, b2, v1, v2);
+  return arrayFromTransformation(
+    opengv::relative_pose::seventeenpt(adapter));
+}
+
+py::object seventeenpt2( pyarray_d &b1, pyarray_d &b2, pyarray_d &v1, pyarray_d &v2, pyarray_d &R, pyarray_d &t)
+{
+  NonCentralRelativeAdapter adapter(b1, b2, v1, v2, R, t);
+  return arrayFromTransformation(
+    opengv::relative_pose::seventeenpt(adapter));
+}
+
 
 py::object eightpt( pyarray_d &b1, pyarray_d &b2 )
 {
@@ -683,6 +877,84 @@ py::object ransac(
 
   // Create a ransac solver for the problem
   opengv::sac::Ransac<CentralRelativePoseSacProblem> ransac;
+
+  ransac.sac_model_ = relposeproblem_ptr;
+  ransac.threshold_ = threshold;
+  ransac.max_iterations_ = max_iterations;
+  ransac.probability_ = probability;
+
+  // Solve
+  ransac.computeModel();
+  return arrayFromTransformation(ransac.model_coefficients_);
+}
+
+py::object ransac2(
+    pyarray_d &b1,
+    pyarray_d &b2,
+    pyarray_d &v1,
+    pyarray_d &v2,
+    std::string algo_name,
+    double threshold,
+    int max_iterations,
+    double probability )
+{
+  using namespace opengv::sac_problems::relative_pose;
+
+  NonCentralRelativeAdapter adapter(b1, b2, v1, v2);
+
+  // Create a ransac problem
+  NoncentralRelativePoseSacProblem::algorithm_t algorithm = NoncentralRelativePoseSacProblem::SEVENTEENPT;
+  //if (algo_name == "STEWENIUS") algorithm = CentralRelativePoseSacProblem::STEWENIUS;
+  //else if (algo_name == "NISTER") algorithm = CentralRelativePoseSacProblem::NISTER;
+  //else if (algo_name == "SEVENPT") algorithm = CentralRelativePoseSacProblem::SEVENPT;
+  //else if (algo_name == "EIGHTPT") algorithm = CentralRelativePoseSacProblem::EIGHTPT;
+
+  std::shared_ptr<NoncentralRelativePoseSacProblem>
+      relposeproblem_ptr(
+        new NoncentralRelativePoseSacProblem(adapter, algorithm));
+
+  // Create a ransac solver for the problem
+  opengv::sac::Ransac<NoncentralRelativePoseSacProblem> ransac;
+
+  ransac.sac_model_ = relposeproblem_ptr;
+  ransac.threshold_ = threshold;
+  ransac.max_iterations_ = max_iterations;
+  ransac.probability_ = probability;
+
+  // Solve
+  ransac.computeModel();
+  return arrayFromTransformation(ransac.model_coefficients_);
+}
+
+py::object ransac3(
+    pyarray_d &b1,
+    pyarray_d &b2,
+    pyarray_d &v1,
+    pyarray_d &v2,
+    pyarray_d &R,
+    pyarray_d &t,
+    std::string algo_name,
+    double threshold,
+    int max_iterations,
+    double probability )
+{
+  using namespace opengv::sac_problems::relative_pose;
+
+  NonCentralRelativeAdapter adapter(b1, b2, v1, v2, R, t);
+
+  // Create a ransac problem
+  NoncentralRelativePoseSacProblem::algorithm_t algorithm = NoncentralRelativePoseSacProblem::SEVENTEENPT;
+  //if (algo_name == "STEWENIUS") algorithm = CentralRelativePoseSacProblem::STEWENIUS;
+  //else if (algo_name == "NISTER") algorithm = CentralRelativePoseSacProblem::NISTER;
+  //else if (algo_name == "SEVENPT") algorithm = CentralRelativePoseSacProblem::SEVENPT;
+  //else if (algo_name == "EIGHTPT") algorithm = CentralRelativePoseSacProblem::EIGHTPT;
+
+  std::shared_ptr<NoncentralRelativePoseSacProblem>
+      relposeproblem_ptr(
+        new NoncentralRelativePoseSacProblem(adapter, algorithm));
+
+  // Create a ransac solver for the problem
+  opengv::sac::Ransac<NoncentralRelativePoseSacProblem> ransac;
 
   ransac.sac_model_ = relposeproblem_ptr;
   ransac.threshold_ = threshold;
@@ -851,10 +1123,22 @@ PYBIND11_MODULE(pyopengv, m) {
         py::arg("probability") = 0.99
   );
 
-    m.def("absolute_pose_ransac2", pyopengv::absolute_pose::ransac2,
+    m.def("absolute_pose_ransac_inliers", pyopengv::absolute_pose::ransac_inliers,
         py::arg("f"),
         py::arg("v"),
         py::arg("p"),
+        py::arg("algo_name"),
+        py::arg("threshold"),
+        py::arg("iterations") = 1000,
+        py::arg("probability") = 0.99
+  );
+
+      m.def("absolute_pose_ransac_prior", pyopengv::absolute_pose::ransac_prior,
+        py::arg("f"),
+        py::arg("v"),
+        py::arg("p"),
+        py::arg("R"),
+        py::arg("t"),
         py::arg("algo_name"),
         py::arg("threshold"),
         py::arg("iterations") = 1000,
@@ -876,6 +1160,8 @@ PYBIND11_MODULE(pyopengv, m) {
   m.def("relative_pose_fivept_nister", pyopengv::relative_pose::fivept_nister);
   m.def("relative_pose_fivept_kneip", pyopengv::relative_pose::fivept_kneip);
   m.def("relative_pose_sevenpt", pyopengv::relative_pose::sevenpt);
+  m.def("relative_pose_seventeenpt", pyopengv::relative_pose::seventeenpt);
+  //m.def("relative_pose_seventeenpt2", pyopengv::relative_pose::seventeenpt2);
   m.def("relative_pose_eightpt", pyopengv::relative_pose::eightpt);
   m.def("relative_pose_eigensolver", pyopengv::relative_pose::eigensolver);
   m.def("relative_pose_sixpt", pyopengv::relative_pose::sixpt);
@@ -883,6 +1169,28 @@ PYBIND11_MODULE(pyopengv, m) {
   m.def("relative_pose_ransac", pyopengv::relative_pose::ransac,
         py::arg("b1"),
         py::arg("b2"),
+        py::arg("algo_name"),
+        py::arg("threshold"),
+        py::arg("iterations") = 1000,
+        py::arg("probability") = 0.99
+  );
+  m.def("relative_pose_ransac2", pyopengv::relative_pose::ransac2,
+        py::arg("b1"),
+        py::arg("b2"),
+        py::arg("v1"),
+        py::arg("v2"),
+        py::arg("algo_name"),
+        py::arg("threshold"),
+        py::arg("iterations") = 1000,
+        py::arg("probability") = 0.99
+  );
+    m.def("relative_pose_ransac3", pyopengv::relative_pose::ransac3,
+        py::arg("b1"),
+        py::arg("b2"),
+        py::arg("v1"),
+        py::arg("v2"),
+        py::arg("R"),
+        py::arg("t"),
         py::arg("algo_name"),
         py::arg("threshold"),
         py::arg("iterations") = 1000,

@@ -231,17 +231,29 @@ def test_triangulation():
 
 
 if __name__ == "__main__":
+
+    import pdb
+
     test_relative_pose()
     test_relative_pose_ransac()
     test_relative_pose_ransac_rotation_only()
     test_triangulation()
 
-    f = np.random.randn(10, 3)
-    v = np.random.randn(10, 3)
-    p = np.random.randn(10, 3)
-
-    print(pyopengv.absolute_pose_gpnp(f, v))
-    print("\n")
-    print(pyopengv.absolute_pose_gpnp2(f, v, p))
+    f = np.random.randn(30, 3)
+    v = np.random.randn(30, 3)
+    p = np.random.randn(30, 3)
+    b = np.random.randn(30, 3)
+    R = np.eye(3)
+    t = [0,0,0]
+    #print(pyopengv.absolute_pose_gpnp(f, v))
+    #print("\n")
+    #x = pyopengv.relative_pose_ransac( v,v,R,t, "NISTER", 0.01, 1000)
+    T, inliers = pyopengv.absolute_pose_ransac_inliers(f, v, p, "GP3P", 0.01, 1000)
+    print(inliers)
+    print(T)
+    #ransac_transformation = pyopengv.relative_pose_ransac2(f,v,p,b, "SEVENTEENPT", 0.01, 1000)
+    #ransac_transformation = pyopengv.relative_pose_ransac3(f,v,p,b,t,R, "SEVENTEENPT", 0.01, 1000)
+    #print(ransac_transformation)
+    #print(pyopengv.absolute_pose_gpnp2(f, v, p, b))
 
 
